@@ -1,0 +1,12 @@
+.driver-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+
+    .driver-item {
+        padding: 10px;
+        border: 1px solid black;
+    }
+}
