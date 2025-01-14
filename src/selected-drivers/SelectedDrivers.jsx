@@ -1,34 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
-import './DriversList.scss';
+import './SelectedDrivers.scss';
 
-export const DriversList = () => {
+export const SelectedDrivers = () => {
     const [drivers, setDrivers] = useState([]);
     useEffect(() => {
         (async () => {
-            const drivers = await axios.get('http://ergast.com/api/f1/2024/drivers.json').then((res) => {
-                return res.data.MRData.DriverTable.Drivers;
+            const drivers = await axios.get('http://localhost:8080/drivers').then((res) => {
+                return res.data.drivers;
             });
             setDrivers(drivers);
         })();
     }, []);
 
-    const handleDriverClick = async (driver) => {
-        await axios
-            .post('http://localhost:8080/drivers', driver)
-            .then((response) => {
-                console.log(response.data.message);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
     return (
         <div className="driver-wrapper">
-            {drivers.map((driver, index) => (
-                <div key={index} className="driver-item" onClick={() => handleDriverClick(driver)}>
+            {drivers?.map((driver, index) => (
+                <div key={index} className="driver-item">
                     <div>Driver code - {driver.code}</div>
                     <div>Date of birth - {driver.dateOfBirth}</div>
                     <div>Driver ID - {driver.driverId}</div>
