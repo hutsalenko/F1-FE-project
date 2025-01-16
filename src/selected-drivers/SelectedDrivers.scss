@@ -8,5 +8,15 @@
         padding: 20px;
         border: 1px solid black;
         border-radius: 20px;
+        position: relative;
+
+        .item-delete {
+            position: absolute;
+            top: 3%;
+            right: 3%;
+            font-size: 30px;
+            cursor: pointer;
+            rotate: 45deg;
+        }
     }
 }

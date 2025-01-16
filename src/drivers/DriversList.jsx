@@ -28,7 +28,7 @@ export const DriversList = () => {
     return (
         <div className="driver-wrapper">
             {drivers.map((driver, index) => (
-                <div key={index} className="driver-item" onClick={() => handleDriverClick(driver)}>
+                <div key={index} className="driver-item">
                     <div>Driver code - {driver.code}</div>
                     <div>Date of birth - {driver.dateOfBirth}</div>
                     <div>Driver ID - {driver.driverId}</div>
@@ -38,6 +38,9 @@ export const DriversList = () => {
                     <div>Permanent number - {driver.permanentNumber}</div>
                     <div>
                         Url - <a href={`${driver.url}`}>{driver.url}</a>
+                    </div>
+                    <div className="item-add" onClick={() => handleDriverClick(driver)}>
+                        +
                     </div>
                 </div>
             ))}

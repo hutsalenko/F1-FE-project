@@ -29,7 +29,7 @@ export const SelectedDrivers = () => {
     return (
         <div className="driver-wrapper">
             {drivers?.map((driver, index) => (
-                <div key={index} className="driver-item" onClick={() => handleDriverDeletion(driver.driverId)}>
+                <div key={index} className="driver-item">
                     <div>Driver code - {driver.code}</div>
                     <div>Date of birth - {driver.dateOfBirth}</div>
                     <div>Driver ID - {driver.driverId}</div>
@@ -39,6 +39,9 @@ export const SelectedDrivers = () => {
                     <div>Permanent number - {driver.permanentNumber}</div>
                     <div>
                         Url - <a href={`${driver.url}`}>{driver.url}</a>
+                    </div>
+                    <div className="item-delete" onClick={() => handleDriverDeletion(driver.driverId)}>
+                        +
                     </div>
                 </div>
             ))}
