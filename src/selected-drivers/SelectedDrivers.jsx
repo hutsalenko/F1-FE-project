@@ -14,10 +14,22 @@ export const SelectedDrivers = () => {
         })();
     }, []);
 
+    const handleDriverDeletion = async (driverId) => {
+        await axios
+            .delete(`http://localhost:8080/drivers/${driverId}`)
+            .then((response) => {
+                console.log(response.data.message);
+                setDrivers(drivers.filter((driver) => driver.driverId !== driverId));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     return (
         <div className="driver-wrapper">
             {drivers?.map((driver, index) => (
-                <div key={index} className="driver-item">
+                <div key={index} className="driver-item" onClick={() => handleDriverDeletion(driver.driverId)}>
                     <div>Driver code - {driver.code}</div>
                     <div>Date of birth - {driver.dateOfBirth}</div>
                     <div>Driver ID - {driver.driverId}</div>
