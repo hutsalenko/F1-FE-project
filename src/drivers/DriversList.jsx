@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import './DriversList.scss';
 
-export const DriversList = () => {
+export const DriversList = ({ user }) => {
     const [drivers, setDrivers] = useState([]);
     useEffect(() => {
         (async () => {
@@ -16,7 +16,7 @@ export const DriversList = () => {
 
     const handleDriverClick = async (driver) => {
         await axios
-            .post('http://localhost:8080/drivers', driver)
+            .post(`http://localhost:8080/drivers/${user.email}`, driver)
             .then((response) => {
                 console.log(response.data.message);
             })
@@ -39,9 +39,13 @@ export const DriversList = () => {
                     <div>
                         Url - <a href={`${driver.url}`}>{driver.url}</a>
                     </div>
-                    <div className="item-add" onClick={() => handleDriverClick(driver)}>
-                        +
-                    </div>
+                    {user.email ? (
+                        <div className="item-add" onClick={() => handleDriverClick(driver)}>
+                            +
+                        </div>
+                    ) : (
+                        <></>
+                    )}
                 </div>
             ))}
         </div>
