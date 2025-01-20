@@ -43,54 +43,74 @@ export const Users = ({ setUser }) => {
         }
     };
 
+    const userSelection = (user) => setUser(user);
+
+    const userDeletion = async (user) => {
+        try {
+            const userResponse = await axios.delete(`http://localhost:8080/user/${user._id}`, formData);
+            setUsersList((prev) => [...prev.filter((item) => item._id !== user._id)]);
+            console.log(userResponse.data.message);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="users-wrapper">
-            <div className="user-form">
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="Enter email"
-                        />
-                    </div>
-                    <div>
-                        <label>First Name:</label>
-                        <input
-                            type="text"
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleChange}
-                            placeholder="Enter first name"
-                        />
-                    </div>
-                    <div>
-                        <label>Last Name:</label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleChange}
-                            placeholder="Enter last name"
-                        />
-                    </div>
-                    <button type="submit" style={{ marginTop: '10px' }}>
-                        Submit
-                    </button>
-                </form>
-            </div>
-            <div className="user-list">USERS LIST</div>
-            <div>
-                {usersList?.map((user) => (
-                    <div>
-                        <div>{user.email}</div>
-                        <div>{user.firstName}</div>
-                        <div>{user.lastName}</div>
-                    </div>
-                ))}
+            <form onSubmit={handleSubmit} className="user-form">
+                <div className="form-email">
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Enter email"
+                    />
+                </div>
+                <div className="form-firstName">
+                    <label>First Name:</label>
+                    <input
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        placeholder="Enter first name"
+                    />
+                </div>
+                <div className="form-lastName">
+                    <label>Last Name:</label>
+                    <input
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        placeholder="Enter last name"
+                    />
+                </div>
+                <button type="submit" className="form-submit">
+                    Add user
+                </button>
+            </form>
+            <div className="user-list">
+                <div className="user-list-header">Users list:</div>
+                <div>
+                    {usersList?.map((user, index) => (
+                        <div className="list-item" key={`${index}${user.email}`}>
+                            <div>Email: {user.email}</div>
+                            <div>First name: {user.firstName}</div>
+                            <div>Last name: {user.lastName}</div>
+                            <div className="list-item-actions">
+                                <div className="select-action" onClick={() => userSelection(user)}>
+                                    Select user
+                                </div>
+                                <div className="delete-action" onClick={() => userDeletion(user)}>
+                                    Delete user
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

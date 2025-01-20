@@ -4,7 +4,62 @@
     align-items: center;
 
     .user-form {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        margin-bottom: 30px;
+
+        .form-email,
+        .form-firstName,
+        .form-lastName {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+
+            label {
+                margin-bottom: 5px;
+            }
+
+            input {
+                font-size: 15px;
+                padding: 5px;
+                border: 1px solid black;
+                border-radius: 10px;
+                outline: none;
+            }
+        }
+
+        .form-submit {
+            width: 50%;
+            align-self: center;
+        }
     }
     .user-list {
+        .user-list-header {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .list-item {
+            margin-bottom: 20px;
+
+            .list-item-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 5px;
+
+                .select-action,
+                .delete-action {
+                    padding: 5px;
+                    border: 1px solid black;
+                    border-radius: 20px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: lightgrey;
+                    }
+                }
+            }
+        }
     }
 }
