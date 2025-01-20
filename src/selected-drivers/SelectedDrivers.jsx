@@ -3,11 +3,12 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import './SelectedDrivers.scss';
 
-export const SelectedDrivers = () => {
+export const SelectedDrivers = ({ user }) => {
     const [drivers, setDrivers] = useState([]);
+
     useEffect(() => {
         (async () => {
-            const drivers = await axios.get('http://localhost:8080/drivers').then((res) => {
+            const drivers = await axios.get(`http://localhost:8080/drivers/${user._id}`).then((res) => {
                 return res.data.drivers;
             });
             setDrivers(drivers);

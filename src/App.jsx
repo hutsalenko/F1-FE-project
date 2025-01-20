@@ -16,7 +16,7 @@ export const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="users" element={<Users setUser={setUser} />} />
                 <Route path="driver-list" element={<DriversList user={user} />} />
-                <Route path="selected-drivers" element={<SelectedDrivers />} />
+                <Route path="selected-drivers" element={<SelectedDrivers user={user} />} />
             </Routes>
         </BrowserRouter>
     );
