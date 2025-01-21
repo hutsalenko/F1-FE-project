@@ -33,8 +33,10 @@ export const Users = ({ setUser }) => {
 
         try {
             const userResponse = await axios.post('http://localhost:8080/user', formData);
-            setUser(formData);
-            setUsersList((prev) => [...prev, formData]);
+            const newUser = { ...formData, _id: userResponse.data.data._id };
+
+            setUser(newUser);
+            setUsersList((prev) => [...prev, newUser]);
             console.log(userResponse.data.message);
         } catch (error) {
             console.log(error);
