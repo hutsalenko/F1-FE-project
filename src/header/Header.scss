@@ -3,6 +3,12 @@
     width: 100%;
     height: 300px;
     background: center no-repeat url('../f1-banner.png');
+
+    .signup-link {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+    }
 }
 
 .header-wrapper__menu {
