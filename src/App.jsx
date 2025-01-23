@@ -4,6 +4,7 @@ import { Header } from './header/Header';
 import { Home } from './home/Home';
 import { SelectedDrivers } from './selected-drivers/SelectedDrivers';
 import { Users } from './users/Users';
+import { Login } from './login/Login';
 import { Signup } from './signup/Signup';
 import { useState } from 'react';
 
@@ -16,6 +17,7 @@ export const App = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="signup" element={<Signup />} />
+                <Route path="login" element={<Login />} />
                 <Route path="users" element={<Users setUser={setUser} />} />
                 <Route path="driver-list" element={<DriversList user={user} />} />
                 <Route path="selected-drivers" element={<SelectedDrivers user={user} />} />

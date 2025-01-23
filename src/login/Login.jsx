@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Signup.scss';
+import '../signup/Signup.scss';
+import { useNavigate } from 'react-router';
 
-export const Signup = () => {
+export const Login = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
         email: '',
         password: '',
     });
 
     const [errors, setErrors] = useState({
-        firstName: '',
-        lastName: '',
         email: '',
         password: '',
     });
@@ -21,17 +20,7 @@ export const Signup = () => {
 
     const validate = () => {
         let isValid = true;
-        const newErrors = { firstName: '', lastName: '', email: '', password: '' };
-
-        if (!formData.firstName.trim()) {
-            newErrors.firstName = 'First Name is required.';
-            isValid = false;
-        }
-
-        if (!formData.lastName.trim()) {
-            newErrors.lastName = 'Last Name is required.';
-            isValid = false;
-        }
+        const newErrors = { email: '', password: '' };
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!formData.email.trim()) {
@@ -64,43 +53,24 @@ export const Signup = () => {
         e.preventDefault();
         if (validate()) {
             try {
-                const createUserResponse = await axios.post('http://localhost:8080/signup', formData);
-                setSignupMessage(createUserResponse.data.message);
-                setFormData({ firstName: '', lastName: '', email: '', password: '' });
+                await axios.post('http://localhost:8080/login', formData);
+                setFormData({ email: '', password: '' });
             } catch (error) {
                 setSignupMessage(error.response.data.message);
             }
         }
     };
 
+    const goToSignUpPage = () => navigate('/signup');
+
     return (
         <div className="form-container">
+            <button className="sign-up-btn" onClick={() => goToSignUpPage()}>
+                Sign up
+            </button>
+
             <form onSubmit={handleSubmit} className="signup-form">
-                <h2>Signup Form</h2>
-
-                <div className="form-group">
-                    <label htmlFor="firstName">First Name</label>
-                    <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                    />
-                    {errors.firstName && <span className="error">{errors.firstName}</span>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="lastName">Last Name</label>
-                    <input
-                        type="text"
-                        id="lastName"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                    />
-                    {errors.lastName && <span className="error">{errors.lastName}</span>}
-                </div>
+                <h2>Login Form</h2>
 
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
@@ -120,8 +90,8 @@ export const Signup = () => {
                     {errors.password && <span className="error">{errors.password}</span>}
                 </div>
 
-                <button type="submit">Submit</button>
-                {signupMessage && <div className='form-signup-msg'>{signupMessage}</div>}
+                <button type="submit">Login</button>
+                {signupMessage && <div className="form-signup-msg">{signupMessage}</div>}
             </form>
         </div>
     );

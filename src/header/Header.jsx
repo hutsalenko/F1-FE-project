@@ -6,8 +6,8 @@ export const Header = ({ user }) => {
     return (
         <>
             <div className="header-wrapper">
-                <NavLink to="/signup" className="signup-link">
-                    Signup
+                <NavLink to="/login" className="login-link">
+                    Login
                 </NavLink>
             </div>
             <div className="header-wrapper__menu">

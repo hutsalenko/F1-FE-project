@@ -1,4 +1,6 @@
 .form-container {
+    display: flex;
+    flex-direction: column;
     max-width: 400px;
     margin: 2rem auto;
     padding: 1rem;
@@ -6,6 +8,14 @@
     border-radius: 8px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sign-up-btn {
+    width: 20%;
+    padding: 10px;
+    align-self: flex-end;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
 .signup-form {
@@ -50,5 +60,10 @@
         &:hover {
             background-color: #0056b3;
         }
+    }
+
+    .form-signup-msg {
+        margin-top: 10px;
+        text-align: center;
     }
 }
