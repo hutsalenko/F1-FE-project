@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { Base64 } from 'js-base64';
+
 import './DriversList.scss';
 
 export const DriversList = ({ user }) => {
@@ -16,7 +18,9 @@ export const DriversList = ({ user }) => {
 
     const handleDriverClick = async (driver) => {
         await axios
-            .post(`http://localhost:8080/drivers/${user.email}`, driver)
+            .post(`http://localhost:8080/drivers/${user.email}`, driver, {
+                headers: { Authorization: `Bearer ${Base64.encode(localStorage.getItem('token'))}` },
+            })
             .then((response) => {
                 console.log(response.data.message);
             })
@@ -39,13 +43,18 @@ export const DriversList = ({ user }) => {
                     <div>
                         Url - <a href={`${driver.url}`}>{driver.url}</a>
                     </div>
-                    {user.email ? (
+
+                    {/* TODO REMOVE THIS */}
+                    <div className="item-add" onClick={() => handleDriverClick(driver)}>
+                        +
+                    </div>
+                    {/* {user.email ? (
                         <div className="item-add" onClick={() => handleDriverClick(driver)}>
                             +
                         </div>
                     ) : (
                         <></>
-                    )}
+                    )} */}
                 </div>
             ))}
         </div>

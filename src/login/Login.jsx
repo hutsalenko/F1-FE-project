@@ -53,7 +53,18 @@ export const Login = () => {
         e.preventDefault();
         if (validate()) {
             try {
-                await axios.post('http://localhost:8080/login', formData);
+                const createUserResponse = await axios.post('http://localhost:8080/login', formData);
+
+                localStorage.setItem('token', createUserResponse.data.token);
+                localStorage.setItem('userId', createUserResponse.data.userId);
+
+                const remainingMilliseconds = 60 * 60 * 1000;
+                const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
+
+                localStorage.setItem('expiryDate', expiryDate.toISOString());
+
+                //TODO ADD AUTOLOGOUT
+
                 setFormData({ email: '', password: '' });
             } catch (error) {
                 setSignupMessage(error.response.data.message);
