@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { requestHelper } from '../helper/requestHelper';
 import './Users.scss';
 
 export const Users = ({ setUser }) => {
@@ -13,10 +13,12 @@ export const Users = ({ setUser }) => {
 
     useEffect(() => {
         (async () => {
-            const drivers = await axios.get('http://localhost:8080/user').then((res) => {
-                return res.data.users;
-            });
-            setUsersList(drivers);
+            try {
+                const users = await requestHelper({ url: `/user` });
+                setUsersList(users.data.users);
+            } catch (error) {
+                console.log(error);
+            }
         })();
     }, []);
 
@@ -28,28 +30,11 @@ export const Users = ({ setUser }) => {
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const userResponse = await axios.post('http://localhost:8080/user', formData);
-            const newUser = { ...formData, _id: userResponse.data.data._id };
-
-            setUser(newUser);
-            setUsersList((prev) => [...prev, newUser]);
-            console.log(userResponse.data.message);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setFormData({ email: '', firstName: '', lastName: '' });
-        }
-    };
-
     const userSelection = (user) => setUser(user);
 
     const userDeletion = async (user) => {
         try {
-            const userResponse = await axios.delete(`http://localhost:8080/user/${user._id}`, formData);
+            const userResponse = await requestHelper({ method: 'DELETE', url: `/user/${user._id}`, data: formData });
             setUsersList((prev) => [...prev.filter((item) => item._id !== user._id)]);
             console.log(userResponse.data.message);
         } catch (error) {
@@ -59,7 +44,7 @@ export const Users = ({ setUser }) => {
 
     return (
         <div className="users-wrapper">
-            <form onSubmit={handleSubmit} className="user-form">
+            {/* <form className="user-form">
                 <div className="form-email">
                     <label>Email:</label>
                     <input
@@ -93,7 +78,7 @@ export const Users = ({ setUser }) => {
                 <button type="submit" className="form-submit">
                     Add user
                 </button>
-            </form>
+            </form> */}
             <div className="user-list">
                 <div className="user-list-header">Users list:</div>
                 <div>

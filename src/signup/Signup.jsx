@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { requestHelper } from '../helper/requestHelper';
 import './Signup.scss';
 
 export const Signup = () => {
@@ -64,7 +64,12 @@ export const Signup = () => {
         e.preventDefault();
         if (validate()) {
             try {
-                const createUserResponse = await axios.post('http://localhost:8080/signup', formData);
+                const createUserResponse = await requestHelper({
+                    method: 'POST',
+                    url: '/signup',
+                    data: formData,
+                });
+
                 setSignupMessage(createUserResponse.data.message);
                 setFormData({ firstName: '', lastName: '', email: '', password: '' });
             } catch (error) {
@@ -121,7 +126,7 @@ export const Signup = () => {
                 </div>
 
                 <button type="submit">Submit</button>
-                {signupMessage && <div className='form-signup-msg'>{signupMessage}</div>}
+                {signupMessage && <div className="form-signup-msg">{signupMessage}</div>}
             </form>
         </div>
     );

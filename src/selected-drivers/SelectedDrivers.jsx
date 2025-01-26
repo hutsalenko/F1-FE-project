@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useEffect } from 'react';
+import { requestHelper } from '../helper/requestHelper';
 import './SelectedDrivers.scss';
 
 export const SelectedDrivers = ({ user }) => {
@@ -8,23 +8,27 @@ export const SelectedDrivers = ({ user }) => {
 
     useEffect(() => {
         (async () => {
-            const drivers = await axios.get(`http://localhost:8080/drivers/${user._id}`).then((res) => {
-                return res.data.drivers;
-            });
-            setDrivers(drivers);
+            try {
+                const drivers = await requestHelper({
+                    url: `/drivers/${user._id}`,
+                });
+                setDrivers(drivers.data.drivers);
+            } catch (error) {
+                console.log(error);
+            }
         })();
     }, []);
 
     const handleDriverDeletion = async (driverId) => {
-        await axios
-            .delete(`http://localhost:8080/drivers/${driverId}`)
-            .then((response) => {
-                console.log(response.data.message);
-                setDrivers(drivers.filter((driver) => driver.driverId !== driverId));
-            })
-            .catch((error) => {
-                console.log(error);
+        try {
+            await requestHelper({
+                method: 'DELETE',
+                url: `/drivers/${driverId}`,
             });
+            setDrivers(drivers.filter((driver) => driver.driverId !== driverId));
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

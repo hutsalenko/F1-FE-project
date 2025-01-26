@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import '../signup/Signup.scss';
 import { useNavigate } from 'react-router';
+import { requestHelper } from '../helper/requestHelper';
+import '../signup/Signup.scss';
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -53,7 +53,11 @@ export const Login = () => {
         e.preventDefault();
         if (validate()) {
             try {
-                const createUserResponse = await axios.post('http://localhost:8080/login', formData);
+                const createUserResponse = await requestHelper({
+                    method: 'POST',
+                    url: '/login',
+                    data: formData,
+                });
 
                 localStorage.setItem('token', createUserResponse.data.token);
                 localStorage.setItem('userId', createUserResponse.data.userId);

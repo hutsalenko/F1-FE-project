@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useEffect } from 'react';
-import { Base64 } from 'js-base64';
-
+import { requestHelper } from '../helper/requestHelper';
+import axios from 'axios';
 import './DriversList.scss';
 
 export const DriversList = ({ user }) => {
     const [drivers, setDrivers] = useState([]);
+
     useEffect(() => {
         (async () => {
             const drivers = await axios.get('http://ergast.com/api/f1/2024/drivers.json').then((res) => {
@@ -17,16 +17,11 @@ export const DriversList = ({ user }) => {
     }, []);
 
     const handleDriverClick = async (driver) => {
-        await axios
-            .post(`http://localhost:8080/drivers/${user.email}`, driver, {
-                headers: { Authorization: `Bearer ${Base64.encode(localStorage.getItem('token'))}` },
-            })
-            .then((response) => {
-                console.log(response.data.message);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        await requestHelper({
+            method: 'POST',
+            url: `/drivers/${user.email}`,
+            data: driver,
+        });
     };
 
     return (
