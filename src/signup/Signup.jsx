@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { requestHelper } from '../helper/requestHelper';
 import './Signup.scss';
 
-export const Signup = () => {
+export const Signup = ({ setUserData }) => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -71,8 +71,14 @@ export const Signup = () => {
                 });
 
                 setSignupMessage(createUserResponse.data.message);
+                setUserData({
+                    isAuth: false,
+                });
                 setFormData({ firstName: '', lastName: '', email: '', password: '' });
             } catch (error) {
+                setUserData({
+                    isAuth: false,
+                });
                 setSignupMessage(error.response.data.message);
             }
         }

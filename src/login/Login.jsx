@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { requestHelper } from '../helper/requestHelper';
 import '../signup/Signup.scss';
 
-export const Login = () => {
+export const Login = ({ setUserData }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -67,11 +67,18 @@ export const Login = () => {
 
                 localStorage.setItem('expiryDate', expiryDate.toISOString());
 
-                //TODO ADD AUTOLOGOUT
+                setUserData({
+                    isAuth: true,
+                    token: createUserResponse.data.token,
+                    userId: createUserResponse.data.userId,
+                });
 
                 setFormData({ email: '', password: '' });
             } catch (error) {
                 setSignupMessage(error.response.data.message);
+                setUserData({
+                    isAuth: false,
+                });
             }
         }
     };
