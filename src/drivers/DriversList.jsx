@@ -4,7 +4,7 @@ import { requestHelper } from '../helper/requestHelper';
 import axios from 'axios';
 import './DriversList.scss';
 
-export const DriversList = ({ user }) => {
+export const DriversList = ({ userData }) => {
     const [drivers, setDrivers] = useState([]);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export const DriversList = ({ user }) => {
     const handleDriverClick = async (driver) => {
         await requestHelper({
             method: 'POST',
-            url: `/drivers/${user.email}`,
+            url: `/drivers/${userData.userId}`,
             data: driver,
         });
     };
@@ -39,17 +39,13 @@ export const DriversList = ({ user }) => {
                         Url - <a href={`${driver.url}`}>{driver.url}</a>
                     </div>
 
-                    {/* TODO REMOVE THIS */}
-                    <div className="item-add" onClick={() => handleDriverClick(driver)}>
-                        +
-                    </div>
-                    {/* {user.email ? (
+                    {userData.isAuth ? (
                         <div className="item-add" onClick={() => handleDriverClick(driver)}>
                             +
                         </div>
                     ) : (
                         <></>
-                    )} */}
+                    )}
                 </div>
             ))}
         </div>

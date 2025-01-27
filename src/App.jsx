@@ -50,7 +50,7 @@ export const App = () => {
                 <Route path="signup" element={<Signup setUserData={setUserData} />} />
                 <Route path="login" element={<Login setUserData={setUserData} />} />
                 <Route path="users" element={<Users setUser={setUser} />} />
-                <Route path="driver-list" element={<DriversList user={user} />} />
+                <Route path="driver-list" element={<DriversList userData={userData} />} />
                 <Route path="selected-drivers" element={<SelectedDrivers user={user} />} />
             </Routes>
         </BrowserRouter>
