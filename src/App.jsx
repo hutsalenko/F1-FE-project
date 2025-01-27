@@ -42,6 +42,9 @@ export const App = () => {
         }, milliseconds);
     };
 
+    console.log('user', user);
+    console.log('userData', userData);
+
     return (
         <BrowserRouter>
             <Header user={user} />
@@ -51,7 +54,7 @@ export const App = () => {
                 <Route path="login" element={<Login setUserData={setUserData} />} />
                 <Route path="users" element={<Users setUser={setUser} />} />
                 <Route path="driver-list" element={<DriversList userData={userData} />} />
-                <Route path="selected-drivers" element={<SelectedDrivers user={user} />} />
+                <Route path="selected-drivers" element={<SelectedDrivers userData={userData} />} />
             </Routes>
         </BrowserRouter>
     );

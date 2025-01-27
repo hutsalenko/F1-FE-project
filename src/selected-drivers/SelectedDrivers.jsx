@@ -3,21 +3,21 @@ import { useEffect } from 'react';
 import { requestHelper } from '../helper/requestHelper';
 import './SelectedDrivers.scss';
 
-export const SelectedDrivers = ({ user }) => {
+export const SelectedDrivers = ({ userData }) => {
     const [drivers, setDrivers] = useState([]);
 
     useEffect(() => {
-        (async () => {
+        userData.userId && (async () => {
             try {
                 const drivers = await requestHelper({
-                    url: `/drivers/${user._id}`,
+                    url: `/drivers/${userData.userId}`,
                 });
                 setDrivers(drivers.data.drivers);
             } catch (error) {
                 console.log(error);
             }
         })();
-    }, []);
+    }, [userData.userId]);
 
     const handleDriverDeletion = async (driverId) => {
         try {
