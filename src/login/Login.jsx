@@ -74,6 +74,7 @@ export const Login = ({ setUserData }) => {
                 });
 
                 setFormData({ email: '', password: '' });
+                navigate('/');
             } catch (error) {
                 setSignupMessage(error.response.data.message);
                 setUserData({

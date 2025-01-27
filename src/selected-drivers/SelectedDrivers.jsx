@@ -7,16 +7,17 @@ export const SelectedDrivers = ({ userData }) => {
     const [drivers, setDrivers] = useState([]);
 
     useEffect(() => {
-        userData.userId && (async () => {
-            try {
-                const drivers = await requestHelper({
-                    url: `/drivers/${userData.userId}`,
-                });
-                setDrivers(drivers.data.drivers);
-            } catch (error) {
-                console.log(error);
-            }
-        })();
+        userData.userId &&
+            (async () => {
+                try {
+                    const drivers = await requestHelper({
+                        url: `/drivers/${userData.userId}`,
+                    });
+                    setDrivers(drivers.data.drivers);
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
     }, [userData.userId]);
 
     const handleDriverDeletion = async (driverId) => {

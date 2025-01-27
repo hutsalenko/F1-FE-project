@@ -42,12 +42,11 @@ export const App = () => {
         }, milliseconds);
     };
 
-    console.log('user', user);
     console.log('userData', userData);
 
     return (
         <BrowserRouter>
-            <Header user={user} />
+            <Header userData={userData} />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="signup" element={<Signup setUserData={setUserData} />} />
