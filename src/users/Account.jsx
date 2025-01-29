@@ -10,24 +10,27 @@ export const Account = ({ userData, setUserData, setCurrentUser, currentUser }) 
         email: '',
         firstName: '',
         lastName: '',
+        oldPassword: '',
+        newPassword: '',
     });
 
     useEffect(() => {
         if (Object.keys(currentUser).length) {
-            setFormData({
+            setFormData((prev) => ({
+                ...prev,
                 email: currentUser.email,
                 firstName: currentUser.firstName,
                 lastName: currentUser.lastName,
-            });
+            }));
         }
     }, [Object.keys(currentUser).length]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
+        setFormData((prev) => ({
+            ...prev,
             [name]: value,
-        });
+        }));
     };
 
     const handleUserDeleting = async (e) => {
@@ -90,6 +93,26 @@ export const Account = ({ userData, setUserData, setCurrentUser, currentUser }) 
                         value={formData.lastName}
                         onChange={handleChange}
                         placeholder="Enter last name"
+                    />
+                </div>
+                <div className="form-old-password">
+                    <label>New password:</label>
+                    <input
+                        type="password"
+                        name="newPassword"
+                        value={formData.newPassword}
+                        onChange={handleChange}
+                        placeholder="Enter old password"
+                    />
+                </div>
+                <div className="form-new-password">
+                    <label>Old password:</label>
+                    <input
+                        type="password"
+                        name="oldPassword"
+                        value={formData.oldPassword}
+                        onChange={handleChange}
+                        placeholder="Enter new password"
                     />
                 </div>
                 <div>

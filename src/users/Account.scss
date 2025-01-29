@@ -11,7 +11,9 @@
 
         .form-email,
         .form-firstName,
-        .form-lastName {
+        .form-lastName,
+        .form-old-password,
+        .form-new-password {
             display: flex;
             flex-direction: column;
             margin-bottom: 10px;
