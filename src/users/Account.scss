@@ -34,32 +34,4 @@
             align-self: center;
         }
     }
-    .user-list {
-        .user-list-header {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .list-item {
-            margin-bottom: 20px;
-
-            .list-item-actions {
-                display: flex;
-                gap: 10px;
-                margin-top: 5px;
-
-                .select-action,
-                .delete-action {
-                    padding: 5px;
-                    border: 1px solid black;
-                    border-radius: 20px;
-                    cursor: pointer;
-
-                    &:hover {
-                        background-color: lightgrey;
-                    }
-                }
-            }
-        }
-    }
 }

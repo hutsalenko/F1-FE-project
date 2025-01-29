@@ -76,9 +76,11 @@ export const Login = ({ setUserData }) => {
                 setFormData({ email: '', password: '' });
                 navigate('/');
             } catch (error) {
-                setSignupMessage(error.response.data.message);
+                setSignupMessage(error.message);
                 setUserData({
                     isAuth: false,
+                    token: null,
+                    userId: null,
                 });
             }
         }

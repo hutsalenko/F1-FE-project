@@ -1,13 +1,32 @@
 .header-wrapper {
+    display: flex;
+    justify-content: end;
+    gap: 30px;
     margin-bottom: 10px;
     width: 100%;
     height: 300px;
     background: center no-repeat url('../f1-banner.png');
 
+    .header-user {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+
+        .user-edit {
+            margin-top: 10px;
+            cursor: pointer;
+            align-self: center;
+            border: 1px solid black;
+            border-radius: 8px;
+            padding: 6px;
+        }
+    }
+
     .login-link {
-        position: absolute;
-        top: 50px;
-        right: 50px;
+        margin-top: 20px;
+        margin-right: 20px;
+
+        cursor: pointer;
     }
 }
 
@@ -19,9 +38,4 @@
     a {
         margin-right: 10px;
     }
-}
-
-.header-selected-user {
-    text-align: center;
-    margin-bottom: 20px;
 }

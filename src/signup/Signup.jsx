@@ -73,11 +73,15 @@ export const Signup = ({ setUserData }) => {
                 setSignupMessage(createUserResponse.data.message);
                 setUserData({
                     isAuth: false,
+                    token: null,
+                    userId: null,
                 });
                 setFormData({ firstName: '', lastName: '', email: '', password: '' });
             } catch (error) {
                 setUserData({
                     isAuth: false,
+                    token: null,
+                    userId: null,
                 });
                 setSignupMessage(error.response.data.message);
             }

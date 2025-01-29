@@ -10,6 +10,6 @@ export const requestHelper = async (config) => {
             headers: { Authorization: `Bearer ${Base64.encode(localStorage.getItem('token'))}` },
         });
     } catch (err) {
-        throw new Error(err);
+        throw new Error(err.response.data.error);
     }
 };

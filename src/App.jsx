@@ -4,18 +4,31 @@ import { DriversList } from './drivers/DriversList';
 import { Header } from './header/Header';
 import { Home } from './home/Home';
 import { SelectedDrivers } from './selected-drivers/SelectedDrivers';
-import { Users } from './users/Users';
+import { Account } from './users/Account';
 import { Login } from './login/Login';
 import { Signup } from './signup/Signup';
 import { logoutHandler } from './helper/logoutHandler';
+import { requestHelper } from './helper/requestHelper';
 
 export const App = () => {
-    const [user, setUser] = useState({});
+    const [currentUser, setCurrentUser] = useState({});
     const [userData, setUserData] = useState({
         isAuth: false,
         token: null,
         userId: null,
     });
+
+    useEffect(() => {
+        userData?.userId &&
+            (async () => {
+                try {
+                    const users = await requestHelper({ url: `/user/${userData.userId}` });
+                    setCurrentUser(users.data.user);
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
+    }, [userData?.userId]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -42,16 +55,29 @@ export const App = () => {
         }, milliseconds);
     };
 
-    console.log('userData', userData);
-
     return (
         <BrowserRouter>
-            <Header userData={userData} />
+            <Header
+                userData={userData}
+                setUserData={setUserData}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+            />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="signup" element={<Signup setUserData={setUserData} />} />
                 <Route path="login" element={<Login setUserData={setUserData} />} />
-                <Route path="users" element={<Users setUser={setUser} />} />
+                <Route
+                    path="account"
+                    element={
+                        <Account
+                            userData={userData}
+                            setUserData={setUserData}
+                            setCurrentUser={setCurrentUser}
+                            currentUser={currentUser}
+                        />
+                    }
+                />
                 <Route path="driver-list" element={<DriversList userData={userData} />} />
                 <Route path="selected-drivers" element={<SelectedDrivers userData={userData} />} />
             </Routes>
