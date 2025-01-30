@@ -7,7 +7,10 @@ export const requestHelper = async (config) => {
             method: config.method || 'GET',
             url: `http://localhost:8080${config.url}`,
             data: config.data ? config.data : null,
-            headers: { Authorization: `Bearer ${Base64.encode(localStorage.getItem('token'))}` },
+            headers: {
+                Authorization: `Bearer ${Base64.encode(localStorage.getItem('token'))}`,
+                ...config.headers,
+            },
         });
     } catch (err) {
         throw new Error(err.response.data.error);

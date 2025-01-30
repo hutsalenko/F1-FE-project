@@ -20,7 +20,7 @@ export const SelectedDrivers = ({ userData }) => {
             })();
     }, [userData.userId]);
 
-    const handleDriverDeletion = async (driverId) => {
+    const deleteDriver = async (driverId) => {
         try {
             await requestHelper({
                 method: 'DELETE',
@@ -30,6 +30,10 @@ export const SelectedDrivers = ({ userData }) => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const editDriver = () => {
+        console.log('ddf');
     };
 
     return (
@@ -46,8 +50,13 @@ export const SelectedDrivers = ({ userData }) => {
                     <div>
                         Url - <a href={`${driver.url}`}>{driver.url}</a>
                     </div>
-                    <div className="item-delete" onClick={() => handleDriverDeletion(driver.driverId)}>
-                        +
+                    <div className="item-actions">
+                        <div className="item-delete" onClick={() => deleteDriver(driver.driverId)}>
+                            Delete
+                        </div>
+                        <div className="item-edit" onClick={() => editDriver(driver.driverId)}>
+                            Edit
+                        </div>
                     </div>
                 </div>
             ))}

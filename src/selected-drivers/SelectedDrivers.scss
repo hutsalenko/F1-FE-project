@@ -10,13 +10,25 @@
         border-radius: 20px;
         position: relative;
 
-        .item-delete {
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: absolute;
             top: 3%;
             right: 3%;
-            font-size: 30px;
-            cursor: pointer;
-            rotate: 45deg;
+            font-size: 20px;
+
+            .item-delete,
+            .item-edit {
+                padding: 5px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: lightgrey;
+                }
+            }
         }
     }
 }
