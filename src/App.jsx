@@ -9,6 +9,8 @@ import { Login } from './login/Login';
 import { Signup } from './signup/Signup';
 import { logoutHandler } from './helper/logoutHandler';
 import { requestHelper } from './helper/requestHelper';
+import { EditDriver } from './selected-drivers/edit-driver/EditDriver';
+import { SelectedDriverList } from './selected-drivers/selected-driver-list/SelectedDriverList';
 
 export const App = () => {
     const [currentUser, setCurrentUser] = useState({});
@@ -79,7 +81,10 @@ export const App = () => {
                     }
                 />
                 <Route path="driver-list" element={<DriversList userData={userData} />} />
-                <Route path="selected-drivers" element={<SelectedDrivers userData={userData} />} />
+                <Route path="selected-drivers" element={<SelectedDrivers />}>
+                    <Route index element={<SelectedDriverList userData={userData} />} />
+                    <Route path="edit/:userId" element={<EditDriver />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

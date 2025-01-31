@@ -10,6 +10,10 @@
         border-radius: 20px;
         position: relative;
 
+        .item-photo {
+            width: 300px;
+        }
+
         .item-actions {
             display: flex;
             flex-direction: column;
