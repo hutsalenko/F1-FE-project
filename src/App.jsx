@@ -83,7 +83,7 @@ export const App = () => {
                 <Route path="driver-list" element={<DriversList userData={userData} />} />
                 <Route path="selected-drivers" element={<SelectedDrivers />}>
                     <Route index element={<SelectedDriverList userData={userData} />} />
-                    <Route path="edit/:userId" element={<EditDriver />} />
+                    <Route path="edit/:driverId" element={<EditDriver />} />
                 </Route>
             </Routes>
         </BrowserRouter>

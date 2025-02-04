@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { requestHelper } from '../../helper/requestHelper';
 import './EditDriver.scss';
 
 export const EditDriver = () => {
-    const { state } = useLocation();
+    const { driverId } = useParams();
 
-    const [currentImage, setCurrentImage] = useState({
-        image: state.imageUrl,
-    });
+    const [currentDriver, setCurrentDriver] = useState({});
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const drivers = await requestHelper({
+                    url: `/driver/${driverId}`,
+                });
+
+                setCurrentDriver(drivers.data.driver);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
 
     const handleImageChange = (e) => {
-        setCurrentImage({ image: URL.createObjectURL(e.target.files[0]).toString() });
+        setCurrentDriver((prev) => ({
+            ...prev,
+            imageUrl: URL.createObjectURL(e.target.files[0]).toString(),
+        }));
     };
 
     const handleUserUpdating = async (e) => {
@@ -21,7 +36,7 @@ export const EditDriver = () => {
         try {
             await requestHelper({
                 method: 'PUT',
-                url: `/drivers/${state._id}`,
+                url: `/driver/${currentDriver._id}`,
                 data: { image: formData.get('image') },
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
@@ -31,28 +46,28 @@ export const EditDriver = () => {
     };
 
     const deletePicture = () => {
-        setCurrentImage();
+        setCurrentDriver();
     };
 
     return (
         <div>
-            <div>{state.code}</div>
-            <div>{state.dateOfBirth}</div>
-            <div>{state.driverId}</div>
-            <div>{state.familyName}</div>
-            <div>{state.givenName}</div>
-            <div>{state.nationality}</div>
-            <div>{state.permanentNumber}</div>
-            <div>{state.url}</div>
-            <div>{state.userId}</div>
-            {currentImage.image && (
+            <div>{currentDriver?.code}</div>
+            <div>{currentDriver?.dateOfBirth}</div>
+            <div>{currentDriver?.driverId}</div>
+            <div>{currentDriver?.familyName}</div>
+            <div>{currentDriver?.givenName}</div>
+            <div>{currentDriver?.nationality}</div>
+            <div>{currentDriver?.permanentNumber}</div>
+            <div>{currentDriver?.url}</div>
+            <div>{currentDriver?.userId}</div>
+            {currentDriver.imageUrl && (
                 <div className="driver-photo-wrapper">
                     <img
                         //TODO It's temporary solution!!!
                         src={
-                            currentImage.image.includes('3000')
-                                ? currentImage.image
-                                : `http://localhost:8080/${currentImage.image}`
+                            currentDriver.imageUrl.includes('3000')
+                                ? currentDriver.imageUrl
+                                : `http://localhost:8080/${currentDriver.imageUrl}`
                         }
                         alt="driver-photo"
                         className="driver-photo"

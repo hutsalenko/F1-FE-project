@@ -25,7 +25,7 @@ export const SelectedDriverList = ({ userData }) => {
         try {
             await requestHelper({
                 method: 'DELETE',
-                url: `/drivers/${driverId}`,
+                url: `/driver/${driverId}`,
             });
             setDrivers(drivers.filter((driver) => driver.driverId !== driverId));
         } catch (error) {
@@ -33,7 +33,7 @@ export const SelectedDriverList = ({ userData }) => {
         }
     };
 
-    const editDriver = (driver) => navigate(`edit/${driver.userId}`, { state: driver });
+    const editDriver = (driver) => navigate(`edit/${driver._id}`);
 
     return (
         <div className="driver-wrapper">
