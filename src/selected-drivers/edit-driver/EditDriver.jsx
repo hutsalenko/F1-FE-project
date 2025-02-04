@@ -6,31 +6,32 @@ import './EditDriver.scss';
 export const EditDriver = () => {
     const { state } = useLocation();
 
-    const [formData, setFormData] = useState({
-        image: {},
+    const [currentImage, setCurrentImage] = useState({
+        image: state.imageUrl,
     });
 
     const handleImageChange = (e) => {
-        const { name, files } = e.target;
-
-        setFormData((prev) => ({
-            ...prev,
-            [name]: files[0],
-        }));
+        setCurrentImage({ image: URL.createObjectURL(e.target.files[0]).toString() });
     };
 
     const handleUserUpdating = async (e) => {
         e.preventDefault();
+        const formData = new FormData(e.target);
+
         try {
             await requestHelper({
                 method: 'PUT',
                 url: `/drivers/${state._id}`,
-                data: formData,
+                data: { image: formData.get('image') },
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const deletePicture = () => {
+        setCurrentImage();
     };
 
     return (
@@ -44,15 +45,29 @@ export const EditDriver = () => {
             <div>{state.permanentNumber}</div>
             <div>{state.url}</div>
             <div>{state.userId}</div>
-            {state.imageUrl && (
-                <img src={`http://localhost:8080/${state.imageUrl}`} alt="driver-photo" className="driver-photo" />
+            {currentImage.image && (
+                <div className="driver-photo-wrapper">
+                    <img
+                        //TODO It's temporary solution!!!
+                        src={
+                            currentImage.image.includes('3000')
+                                ? currentImage.image
+                                : `http://localhost:8080/${currentImage.image}`
+                        }
+                        alt="driver-photo"
+                        className="driver-photo"
+                    />
+                    <div className="driver-photo-delete" onClick={deletePicture}>
+                        +
+                    </div>
+                </div>
             )}
-            <form className="user-form" encType="multipart/form-data">
+            <form className="user-form" onSubmit={handleUserUpdating}>
                 <div className="form-new-password">
                     <label>Edit photo:</label>
                     <input type="file" name="image" onChange={handleImageChange} />
                 </div>
-                <button type="submit" className="form-submit" onClick={handleUserUpdating}>
+                <button type="submit" className="form-submit">
                     Edit user
                 </button>
             </form>
