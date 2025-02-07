@@ -45,10 +45,6 @@ export const EditDriver = () => {
         }
     };
 
-    const deletePicture = () => {
-        setCurrentDriver();
-    };
-
     return (
         <div>
             <div>{currentDriver?.code}</div>
@@ -72,9 +68,6 @@ export const EditDriver = () => {
                         alt="driver-photo"
                         className="driver-photo"
                     />
-                    <div className="driver-photo-delete" onClick={deletePicture}>
-                        +
-                    </div>
                 </div>
             )}
             <form className="user-form" onSubmit={handleUserUpdating}>
