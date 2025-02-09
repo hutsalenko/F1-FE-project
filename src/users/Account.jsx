@@ -6,7 +6,14 @@ import './Account.scss';
 
 export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
+    const [defaultFormData, setDefaultFormData] = useState({
+        email: '',
+        firstName: '',
+        lastName: '',
+        oldPassword: '',
+        newPassword: '',
+    });
+    const [currentFormData, setCurrentFormData] = useState({
         email: '',
         firstName: '',
         lastName: '',
@@ -16,7 +23,13 @@ export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
 
     useEffect(() => {
         if (Object.keys(currentUser).length) {
-            setFormData((prev) => ({
+            setDefaultFormData((prev) => ({
+                ...prev,
+                email: currentUser.email,
+                firstName: currentUser.firstName,
+                lastName: currentUser.lastName,
+            }));
+            setCurrentFormData((prev) => ({
                 ...prev,
                 email: currentUser.email,
                 firstName: currentUser.firstName,
@@ -27,7 +40,7 @@ export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
+        setCurrentFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
@@ -51,15 +64,28 @@ export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
             await requestHelper({
                 method: 'PUT',
                 url: '/user',
-                data: formData,
+                data: getChangedFields(defaultFormData, currentFormData),
             });
+            setDefaultFormData((prev) => ({
+                ...prev,
+                ...currentFormData,
+            }));
             setCurrentUser((prev) => ({
                 ...prev,
-                ...formData,
+                ...currentFormData,
             }));
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const getChangedFields = (original, updated) => {
+        return Object.keys(updated).reduce((acc, key) => {
+            if (original[key] !== updated[key]) {
+                acc[key] = updated[key];
+            }
+            return acc;
+        }, {});
     };
 
     return (
@@ -70,7 +96,7 @@ export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
                     <input
                         type="email"
                         name="email"
-                        value={formData.email}
+                        value={currentFormData.email}
                         onChange={handleChange}
                         placeholder="Enter email"
                     />
@@ -80,7 +106,7 @@ export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
                     <input
                         type="text"
                         name="firstName"
-                        value={formData.firstName}
+                        value={currentFormData.firstName}
                         onChange={handleChange}
                         placeholder="Enter first name"
                     />
@@ -90,7 +116,7 @@ export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
                     <input
                         type="text"
                         name="lastName"
-                        value={formData.lastName}
+                        value={currentFormData.lastName}
                         onChange={handleChange}
                         placeholder="Enter last name"
                     />
@@ -100,7 +126,7 @@ export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
                     <input
                         type="password"
                         name="newPassword"
-                        value={formData.newPassword}
+                        value={currentFormData.newPassword}
                         onChange={handleChange}
                         placeholder="Enter old password"
                     />
@@ -110,13 +136,18 @@ export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
                     <input
                         type="password"
                         name="oldPassword"
-                        value={formData.oldPassword}
+                        value={currentFormData.oldPassword}
                         onChange={handleChange}
                         placeholder="Enter new password"
                     />
                 </div>
                 <div>
-                    <button type="submit" className="form-submit" onClick={handleUserUpdating}>
+                    <button
+                        type="submit"
+                        className="form-submit"
+                        onClick={handleUserUpdating}
+                        disabled={JSON.stringify(defaultFormData) === JSON.stringify(currentFormData)}
+                    >
                         Edit user
                     </button>
                     <button type="submit" className="form-delete" onClick={handleUserDeleting}>
