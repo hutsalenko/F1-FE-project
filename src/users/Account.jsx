@@ -4,7 +4,7 @@ import { logoutHandler } from '../helper/logoutHandler';
 import { useNavigate } from 'react-router';
 import './Account.scss';
 
-export const Account = ({ userData, setUserData, setCurrentUser, currentUser }) => {
+export const Account = ({ setUserData, setCurrentUser, currentUser }) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
@@ -37,7 +37,7 @@ export const Account = ({ userData, setUserData, setCurrentUser, currentUser }) 
         e.preventDefault();
 
         try {
-            await requestHelper({ method: 'DELETE', url: `/user/${userData.userId}` });
+            await requestHelper({ method: 'DELETE', url: '/user' });
             logoutHandler(setUserData);
             navigate('/login');
         } catch (error) {
@@ -50,7 +50,7 @@ export const Account = ({ userData, setUserData, setCurrentUser, currentUser }) 
         try {
             await requestHelper({
                 method: 'PUT',
-                url: `/user/${userData.userId}`,
+                url: '/user',
                 data: formData,
             });
             setCurrentUser((prev) => ({

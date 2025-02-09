@@ -19,7 +19,7 @@ export const DriversList = ({ userData }) => {
     const handleDriverClick = async (driver) => {
         await requestHelper({
             method: 'POST',
-            url: `/drivers/${userData.userId}`,
+            url: '/drivers',
             data: driver,
         });
     };

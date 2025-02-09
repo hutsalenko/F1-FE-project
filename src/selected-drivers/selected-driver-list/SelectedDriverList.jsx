@@ -12,7 +12,7 @@ export const SelectedDriverList = ({ userData }) => {
             (async () => {
                 try {
                     const drivers = await requestHelper({
-                        url: `/drivers/${userData.userId}`,
+                        url: '/drivers',
                     });
                     setDrivers(drivers.data.drivers);
                 } catch (error) {

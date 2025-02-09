@@ -24,7 +24,7 @@ export const App = () => {
         userData?.userId &&
             (async () => {
                 try {
-                    const users = await requestHelper({ url: `/user/${userData.userId}` });
+                    const users = await requestHelper({ url: '/user' });
                     setCurrentUser(users.data.user);
                 } catch (error) {
                     console.log(error);
@@ -72,12 +72,7 @@ export const App = () => {
                 <Route
                     path="account"
                     element={
-                        <Account
-                            userData={userData}
-                            setUserData={setUserData}
-                            setCurrentUser={setCurrentUser}
-                            currentUser={currentUser}
-                        />
+                        <Account setUserData={setUserData} setCurrentUser={setCurrentUser} currentUser={currentUser} />
                     }
                 />
                 <Route path="driver-list" element={<DriversList userData={userData} />} />
