@@ -17,11 +17,13 @@ export const DriversList = ({ userData }) => {
     }, []);
 
     const handleDriverClick = async (driver) => {
-        await requestHelper({
-            method: 'POST',
-            url: '/drivers',
-            data: driver,
-        });
+        try {
+            await requestHelper({
+                method: 'POST',
+                url: '/drivers',
+                data: driver,
+            });
+        } catch (error) {}
     };
 
     return (
