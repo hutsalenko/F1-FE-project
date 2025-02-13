@@ -11,6 +11,7 @@ import { logoutHandler } from './helper/logoutHandler';
 import { requestHelper } from './helper/requestHelper';
 import { EditDriver } from './selected-drivers/edit-driver/EditDriver';
 import { SelectedDriverList } from './selected-drivers/selected-driver-list/SelectedDriverList';
+import { Chats } from './chats/Chats';
 
 export const App = () => {
     const [currentUser, setCurrentUser] = useState({});
@@ -80,6 +81,7 @@ export const App = () => {
                     <Route index element={<SelectedDriverList userData={userData} />} />
                     <Route path="edit/:driverId" element={<EditDriver />} />
                 </Route>
+                <Route path="chats" element={<Chats currentUser={currentUser} />} />
             </Routes>
         </BrowserRouter>
     );

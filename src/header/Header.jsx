@@ -41,6 +41,7 @@ export const Header = ({ userData, setUserData, currentUser, setCurrentUser }) =
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/driver-list">Driver List</NavLink>
                 <NavLink to="/selected-drivers">Selectected Drivers</NavLink>
+                <NavLink to="/chats">Chats</NavLink>
             </div>
         </>
     );
